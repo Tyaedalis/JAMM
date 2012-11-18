@@ -1,13 +1,18 @@
+/*
+	main.cpp
+	Program entry point, initialization of main game class JAMMgame
+*/
+
 #include "JAMMgame.h"
 #include <iostream>
 
 int main(void)
 {
-    std::cout << "Initializing main game class.\n";
-	JAMMgame game;
-	game.testMethod();
+    std::cout << "Initializing main game class ...\n";
 
-	system("pause");
+	JAMMgame game;
+	game.InitializeWindow();
+	game.Start();
 
     return 0;
 }
