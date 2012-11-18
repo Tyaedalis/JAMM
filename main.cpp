@@ -1,8 +1,13 @@
+#include "JAMMgame.h"
 #include <iostream>
 
 int main(void)
 {
-    std::cout << "This is the most awesome game ever created!\n";
+    std::cout << "Initializing main game class.\n";
+	JAMMgame game;
+	game.testMethod();
+
+	system("pause");
 
     return 0;
 }
