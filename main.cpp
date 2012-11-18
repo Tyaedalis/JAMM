@@ -10,9 +10,9 @@ int main(void)
 {
     std::cout << "Initializing main game class ...\n";
 
-	JAMMgame game;
-	game.InitializeWindow();
-	game.Start();
+    JAMMgame game;
+    game.InitializeWindow();
+    game.Start();
 
     return 0;
 }
