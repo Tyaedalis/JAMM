@@ -3,6 +3,8 @@
 	Header file for cave generation file caveGen.cpp. Contains classes.
 */
 
+#pragma once
+
 class Point // An ordered pair of ints
 {
 public:

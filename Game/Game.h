@@ -3,9 +3,9 @@
 	Header file for main game class, JAMMgame.
 */
 
-#include <SFML/Graphics.hpp>
-
 #pragma once
+
+#include <SFML/Graphics.hpp>
 
 #define ScreenWidth 800
 #define ScreenHeight 600
