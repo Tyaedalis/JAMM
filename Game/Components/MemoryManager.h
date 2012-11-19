@@ -9,6 +9,7 @@ namespace JAMM
 
             int Initialize();
             int Shutdown();
+        private:
 
     };
 }

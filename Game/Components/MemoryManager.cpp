@@ -16,4 +16,3 @@ int MemoryManager::Shutdown()
 {
     return 1;
 }
-
