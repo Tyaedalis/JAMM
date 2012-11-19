@@ -22,6 +22,7 @@ namespace JAMM
 		    Game();
 
 	        int InitializeWindow();
+            int ShutdownWindow();
 		    int Start();
 	    private:
 		    int mainLoop();

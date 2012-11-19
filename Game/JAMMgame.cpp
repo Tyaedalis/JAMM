@@ -24,6 +24,14 @@ int Game::InitializeWindow()
     return 1;
 }
 
+int Game::ShutdownWindow()
+{
+    GameWindow->close();
+    delete GameWindow;
+
+    return 1;
+}
+
 // Public method to start the game and run the main loop
 int Game::Start()
 {
