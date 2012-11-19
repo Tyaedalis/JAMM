@@ -5,7 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "JAMMgame.h"
+#include "Game.h"
 
 using namespace JAMM;
 
