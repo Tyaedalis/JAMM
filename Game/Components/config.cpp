@@ -1,72 +1,56 @@
 #include <iostream>
-#include <string>
-#include <sstream>
-#include <map>
-#include <fstream>
+using std::cout;
+using std::string;
 
 #include "config.h"
+using namespace JAMM;
 
-//========================= Class Convert =========================
-
-template <typename T>
-static std::string Convert::T_to_sring(T const &val)
+ConfigFile::ConfigFile() // Default constructor
 {
-    std::ostringstream ostr;
-    ostr << val;
-
-    return ostr.str();
+	configFileName = "DefaultConfig.x"; // Default filename
 }
 
-// Convert std::string to T.
-template <typename T>
-static T Convert::string_to_T(std::string const &val)
+void ConfigFile::parseFile() // Loops through the file and adds contents to data map
 {
-    std::istringstream istr(val);
-    T returnVal;
-    if (!(istr >> returnVal))
-        exitWithError("CFG: Not a valid " +
-        (std::string)typeid(T).name() + " received!\n");
+	// Variables
+	std::ifstream configFile;
+	string line;
 
-    return returnVal;
+	// load the file
+	configFile.open(configFileName);
+
+	// The problem occurs somewhere around here.
+
+	if (!configFile.good())
+	{
+		cout << "Error: Could not load configuration file.\n";
+	}
+
+	while (!configFile.eof())
+	{
+		getline(configFile, line);
+		parseLine(line);
+	}
 }
 
-void Convert::exitWithError(const std::string &error)
+bool ConfigFile::parseLine(const string &line)
 {
-    std::cout << error;
-    std::cin.ignore();
-    std::cin.get();
+	// Depends on config file with complete integrity; no errors can be present.
+	// Needs to be refined.
 
-    exit(EXIT_FAILURE);
-}
+	// Variables
+	size_t pos; // to be used by string.find()
+	string key, value; // data to be pushed to data map
 
-//========================= Class ConfigFile =========================
+	pos = line.find("=");
+	if (!pos) // If it can't find the = then it must be a bad file.
+	{
+		cout << "Error: Invalid configuration file.\n";
+		return false;
+	}
+	
+	key = line.substr(0, pos-2);
+	value = line.substr(pos+2);
 
-void ConfigFile::removeComment(std::string &line) const
-{
-    if (line.find(';') != line.npos)
-        line.erase(line.find(';'));
-}
-
-bool ConfigFile::onlyWhitespace(const std::string &line) const
-{
-    return (line.find_first_not_of(' ') == line.npos);
-}
-
-bool ConfigFile::validLine(const std::string &line) const
-{
-    std::string temp = line;
-    temp.erase(0, temp.find_first_not_of("\t "));
-    if (temp[0] == '=')
-        return false;
-
-    for (size_t i = temp.find('=') + 1; i < temp.length(); i++)
-        if (temp[i] != ' ')
-            return true;
-
-    return false;
-}
-
-void ConfigFile::extractKey(std::string &key, size_t const &sepPos, const std::string &line) const
-{
-
+	data[key] = value;
 }

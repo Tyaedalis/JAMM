@@ -6,8 +6,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Game.h"
-
 using namespace JAMM;
+
+#include "Components\config.h"
 
 // Default constructor
 Game::Game() { }
@@ -25,6 +26,10 @@ int Game::InitializeComponents()
 {
     MemManager = new MemoryManager();
     MemManager->Initialize();
+
+	// Test config functionality
+	ConfigFile config = ConfigFile();
+	config.parseFile();
 
     return 1;
 }

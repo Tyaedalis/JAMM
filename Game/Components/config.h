@@ -1,39 +1,33 @@
+/*
+	config.h
+	Header file for config file handler. Contains class ConfigFile.
+*/
+
 #pragma once
 
-#include <iostream>
+#include <fstream>
 #include <string>
+#include <map>
 
-class Convert
+namespace JAMM
 {
-    public:
-        // Convert t to std::string.
-        template <typename T>
-        static std::string T_to_sring(T const &val);
+	typedef std::map<std::string, std::string> ConfigType;
 
-        // Convert std::string to T.
-        template <typename T>
-        static T string_to_T(std::string const &val);
+	class ConfigFile
+	{
+	private:
+		ConfigType data; // map of string pairs
+		std::string configFileName;
 
-       void exitWithError(const std::string&);
-};
+		// Member functions
+		bool parseLine(const std::string&);
 
-class ConfigFile
-{
-    private:
-	    std::map<std::string, std::string> contents;
-	    std::string fName;
+	public:
+		// Constructors
+		ConfigFile();
+		//ConfigFile(const std::string&); // for non-deefault filenames
 
-        void removeComment(std::string&) const;
-        bool onlyWhitespace(const std::string&) const;
-        bool validLine(const std::string&) const;
-        void extractKey(std::string&, size_t const&, const std::string&) const;
-        void extractValue(std::string&, size_t const&, const std::string&) const;
-        void extractContents(const std::string&);
-        void ExtractKeys();
-
-    public:
-        ConfigFile(const std::string&);
-        bool keyExists(const std::string&);
-        template <typename ValueType>
-        ValueType getValueOfKey(const std::string&, ValueType const&) const;
-};
+		// Member functions
+		void parseFile();
+	};
+}
