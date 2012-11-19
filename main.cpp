@@ -3,7 +3,7 @@
 	Program entry point, initialization of main game class JAMMgame
 */
 
-#include "JAMMgame.h"
+#include "Game\JAMMgame.h"
 #include "caveGen.h"
 
 #include <iostream>
