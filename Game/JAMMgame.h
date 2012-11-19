@@ -14,17 +14,17 @@ namespace JAMM
 {
     class Game
     {
-	    public:
-		    // Pointer to the game render window
-		    sf::RenderWindow* GameWindow;
+        public:
+            // Pointer to the game render window
+            sf::RenderWindow* GameWindow;
 
-		    // Default constructor
-		    Game();
+            // Default constructor
+            Game();
 
-	        int InitializeWindow();
+            int InitializeWindow();
             int ShutdownWindow();
-		    int Start();
-	    private:
-		    int mainLoop();
+            int Start();
+        private:
+            int mainLoop();
     };
 }
