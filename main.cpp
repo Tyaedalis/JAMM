@@ -3,16 +3,16 @@
 	Program entry point, initialization of main game class JAMMgame
 */
 
-#include "JAMMgame.h"
-#include "caveGen.h"
-
+#include "Game/JAMMgame.h"
 #include <iostream>
+
+using namespace JAMM;
 
 int main(void)
 {
     std::cout << "Initializing main game class ...\n";
     
-    JAMMgame game;
+    JAMM::Game game;
     game.InitializeWindow();
     game.Start();
 
