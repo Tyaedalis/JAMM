@@ -33,7 +33,7 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
 	}
 }
 
-bool ConfigFile::parseLine(const string &line)
+void ConfigFile::parseLine(const string &line)
 {
 	// Depends on config file with complete integrity; no errors can be present.
 	// Needs to be refined.
@@ -46,11 +46,11 @@ bool ConfigFile::parseLine(const string &line)
 	if (!pos) // If it can't find the = then it must be a bad file.
 	{
 		cout << "Error: Invalid configuration file.\n";
-		return false;
 	}
 	
 	key = line.substr(0, pos-2);
 	value = line.substr(pos+2);
 
 	data[key] = value;
+	return;
 }

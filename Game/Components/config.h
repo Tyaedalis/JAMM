@@ -20,7 +20,7 @@ namespace JAMM
 		std::string configFileName;
 
 		// Member functions
-		bool parseLine(const std::string&);
+		void parseLine(const std::string&);
 
 	public:
 		// Constructors
