@@ -1,6 +1,6 @@
 /*
 	main.cpp
-	Program entry point, initialization of main game class JAMMgame
+	Program entry point, initialization of main game class JAMM::Game
 */
 
 #include <iostream>
@@ -19,6 +19,8 @@ int main(void)
 
     // Start the game
     game.Start();
+
+    std::cout << "Shutting down game ...\n";
 
     // Shutdown and release game components
     game.ShutdownWindow();

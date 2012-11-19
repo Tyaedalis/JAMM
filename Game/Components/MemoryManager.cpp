@@ -1,3 +1,8 @@
+/*
+	MemoryManager.cpp
+	Implementation file for the memory manager component. Contains class MemoryManager.
+*/
+
 #include <iostream>
 
 #include "MemoryManager.h"

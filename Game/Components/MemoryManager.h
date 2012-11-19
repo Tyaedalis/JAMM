@@ -1,3 +1,8 @@
+/*
+	MemoryManager.h
+	Header file for the memory manager component. Contains class MemoryManager.
+*/
+
 #include <iostream>
 
 namespace JAMM

@@ -1,3 +1,8 @@
+/*
+	config.cpp
+	Implementaion file for config file handler. Contains class ConfigFile.
+*/
+
 #include <iostream>
 #include "config.h"
 

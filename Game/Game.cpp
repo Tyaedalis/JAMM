@@ -5,10 +5,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "Game.h"
-using namespace JAMM;
 
+#include "Game.h"
 #include "Components\config.h"
+
+using namespace JAMM;
 
 // Default constructor
 Game::Game() { }
@@ -24,12 +25,13 @@ int Game::InitializeWindow()
 
 int Game::InitializeComponents()
 {
+    std::cout << "Initializing memory manager ...\n";
     MemManager = new MemoryManager();
     MemManager->Initialize();
 
-	// Test config functionality
-	ConfigFile config = ConfigFile();
-	config.parseFile();
+    std::cout << "Loading configuration file ...\n";
+    ConfigFile config = ConfigFile();     // Test config functionality
+    config.parseFile();
 
     return 1;
 }
