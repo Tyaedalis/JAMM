@@ -13,14 +13,16 @@ int main(void)
     // Create main game class
     JAMM::Game game;
 
-    // Initialize components
+    // Initialize game components
     game.InitializeWindow();
+    game.InitializeComponents();
 
     // Start the game
     game.Start();
 
-    // Shutdown components and release memory
+    // Shutdown and release game components
     game.ShutdownWindow();
+    game.ShutdownComponents();
 
     return 0;
 }

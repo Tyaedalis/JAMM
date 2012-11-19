@@ -1,6 +1,6 @@
 /*
-	JAMMgame.cpp
-	Contains main game class, JAMMgame.
+	Game.cpp
+	Contains main game class, JAMM::Game.
 */
 
 #include <SFML/Graphics.hpp>
@@ -10,10 +10,7 @@
 using namespace JAMM;
 
 // Default constructor
-Game::Game()
-{
-    
-}
+Game::Game() { }
 
 // Function to initialize game window
 int Game::InitializeWindow()
@@ -21,6 +18,22 @@ int Game::InitializeWindow()
     std::cout << "Initializing game window ...\n";
     GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
     
+    return 1;
+}
+
+int Game::InitializeComponents()
+{
+    MemManager = new MemoryManager();
+    MemManager->Initialize();
+
+    return 1;
+}
+
+int Game::ShutdownComponents()
+{
+    MemManager->Shutdown();
+    delete MemManager;
+
     return 1;
 }
 
