@@ -11,6 +11,6 @@ This might eventually turn into a (semi-)playable computer game. It will aim to 
 Notes
 -----
 
-The *DefaultConfig.x* file should be put in the working directory. I'll probably move it so you don't have to worry about updating it later.
+The *DefaultConfig.x* file should be moved to the working directory. This will probably be made unnecessary in a future update.
 
 **There, GitHub, ARE YOU PLEASED?!**
