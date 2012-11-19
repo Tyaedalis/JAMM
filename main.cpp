@@ -4,7 +4,7 @@
 */
 
 #include <iostream>
-#include "Game\JAMMgame.h"
+#include "Game\Game.h"
 
 int main(void)
 {
