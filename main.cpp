@@ -12,7 +12,7 @@ int main(void)
 {
     std::cout << "Initializing main game class ...\n";
     
-    JAMMgame game;
+    JAMM::Game game;
     game.InitializeWindow();
     game.Start();
 

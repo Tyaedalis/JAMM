@@ -7,14 +7,16 @@
 #include <iostream>
 #include "JAMMgame.h"
 
+using namespace JAMM;
+
 // Default constructor
-JAMMgame::JAMMgame()
+Game::Game()
 {
     
 }
 
 // Function to initialize game window
-int JAMMgame::InitializeWindow()
+int Game::InitializeWindow()
 {
     std::cout << "Initializing game window ...\n";
     GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
@@ -23,13 +25,13 @@ int JAMMgame::InitializeWindow()
 }
 
 // Public method to start the game and run the main loop
-int JAMMgame::Start()
+int Game::Start()
 {
-    return JAMMgame::mainLoop();
+    return Game::mainLoop();
 }
 
 // Private main loop function
-int JAMMgame::mainLoop()
+int Game::mainLoop()
 {
     std::cout << "Entering main loop ...\n";
     

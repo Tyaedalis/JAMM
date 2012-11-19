@@ -10,17 +10,20 @@
 #define ScreenWidth 800
 #define ScreenHeight 600
 
-class JAMMgame
+namespace JAMM
 {
-	public:
-		// Pointer to the game render window
-		sf::RenderWindow* GameWindow;
+    class Game
+    {
+	    public:
+		    // Pointer to the game render window
+		    sf::RenderWindow* GameWindow;
 
-		// Default constructor
-		JAMMgame();
+		    // Default constructor
+		    Game();
 
-		int InitializeWindow();
-		int Start();
-	private:
-		int mainLoop();
-};
+	        int InitializeWindow();
+		    int Start();
+	    private:
+		    int mainLoop();
+    };
+}
