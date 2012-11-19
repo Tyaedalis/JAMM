@@ -12,7 +12,7 @@ Point::Point ()
 	y = 0;
 }
 
-Point::Point (int X, int Y)
+Point::Point (const int X, const int Y)
 {
 	x = X;
 	y = Y;
@@ -41,7 +41,7 @@ Grid::Grid ()
 	height = 20;
 }
 
-Grid::Grid (int size)
+Grid::Grid (const int size)
 {
 	width = size;
 	height = size;
