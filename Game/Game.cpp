@@ -8,6 +8,7 @@
 
 #include "Game.h"
 #include "Components\config.h"
+#include "Components\MemoryManager.h"
 
 using namespace JAMM;
 
@@ -28,6 +29,10 @@ int Game::InitializeComponents()
     std::cout << "Initializing memory manager ...\n";
     MemManager = new MemoryManager();
     MemManager->Initialize();
+
+    // Test memory management
+    MemoryPool testPool(2, 10); // creates a memory pool for 10 objects that are up to 2 bytes large
+    testPool.alloc<int>();
 
     std::cout << "Loading configuration file ...\n";
     ConfigFile config = ConfigFile();     // Test config functionality

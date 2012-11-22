@@ -30,7 +30,7 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
 
 	if (!configFile.good())
 	{
-		cout << "Error: Could not load configuration file.\n";
+		cout << "\nError: Could not load configuration file.\n";
         return;
 	}
 

@@ -3,10 +3,52 @@
 	Header file for the memory manager component. Contains class MemoryManager.
 */
 
+#pragma once
+
 #include <iostream>
 
 namespace JAMM
 {
+
+    // =================================================================================
+
+    class _memBank // Base memory bank class, to be derived from with other classes
+    {
+        protected:
+            unsigned int size;
+            void* memBank;
+        public:
+            _memBank(size_t memInitialSize);
+    };
+
+    // =================================================================================
+
+    class MemoryPool : public _memBank // Memory pool class, contains functionality for a memory pool
+    {
+        protected:
+            int _objSize;
+        public:
+            MemoryPool(size_t objSize, size_t bankSizeMultiple);
+
+            template <class T>
+            void* alloc();
+
+            bool free(void* obj);
+    };
+
+    template <class T>
+    void* MemoryPool::alloc()
+    {
+        if (sizeof(T) > _objSize)
+            std::cout << "\nError: Object is too large to fit in a memory pool.\n";
+
+        int test = 10;
+
+        return &test;
+    }
+
+    // =================================================================================
+
     class MemoryManager
     {
         public:
