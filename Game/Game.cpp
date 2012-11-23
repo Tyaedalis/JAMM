@@ -14,15 +14,22 @@ int Game::InitializeComponents()
 {
     Log << "\n============= Begin Startup =============\n";
 
-    Log << "Initializing game window ...\n";
+    Log << "Initializing game window ... ";
     GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
+    if (GameWindow->isOpen()) 
+        Log << "Done.\n";
+    else
+        ExitWithError("Failed to create render window.");
 
-    Log << "Initializing memory manager ...\n";
+    Log << "Initializing memory manager ... ";
     MemManager = new MemoryManager();
-    MemManager->Initialize();
+    if (MemManager->Initialize())
+        Log << "Done.\n";
+    else
+        ExitWithError("Failed to initialize memory manager.");
 
     // Test memory management
-    MemoryPool testPool(2, 10); // creates a memory pool for 10 objects that are up to 2 bytes large
+    MemoryPool testPool(4, 10); // creates a memory pool for 10 objects that are up to 2 bytes large
     testPool.alloc<int>();
 
     Log << "Loading configuration file ...\n";

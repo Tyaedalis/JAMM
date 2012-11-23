@@ -28,12 +28,14 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
 
 	if (!configFile.good())
 	{
-		Log << "\nError: Could not load configuration file.\n";
+		Log << "\nError: Could not load configuration file.\n\n";
         return;
 	}
 
 	while (!configFile.eof())
 	{
+        Log << line << "\n"; // Print the contents of the config file to the console
+
 		getline(configFile, line);
 		parseLine(line);
 	}

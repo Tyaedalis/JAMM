@@ -41,7 +41,7 @@ namespace JAMM
     void* MemoryPool::alloc()
     {
         if (sizeof(T) > _objSize)
-            Log << "\nError: Object is too large to fit in a memory pool.\n";
+            ExitWithError("Attempted to allocate oversized object in memory pool.");
 
         int test = 10;
 
