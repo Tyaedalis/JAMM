@@ -10,7 +10,7 @@ using namespace JAMM;
 // Default constructor
 Game::Game() { }
 
-int Game::InitializeComponents()
+void Game::InitializeComponents()
 {
     Log << "\n============= Begin Startup =============\n";
 
@@ -33,23 +33,19 @@ int Game::InitializeComponents()
     testPool.alloc<int>();
 
     Log << "Loading configuration file ...\n";
-    ConfigFile config = ConfigFile();     // Test config functionality
-    config.parseFile();
+    Config = new ConfigFile(CONFIG_FILENAME);     // Test config functionality
+    Config->parseFile();
 
     Log << "\n============= End Startup =============\n\n";
-
-    return 1;
 }
 
-int Game::ShutdownComponents()
+void Game::ShutdownComponents()
 {
     GameWindow->close();
     delete GameWindow;
 
     MemManager->Shutdown();
     delete MemManager;
-
-    return 1;
 }
 
 // Public method to start the game and run the main loop

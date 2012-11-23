@@ -12,9 +12,9 @@ bool StringSplit(const string &input, char delimiter, string &result1, string &r
 
 // ================ ConfigFile class members ================
 
-ConfigFile::ConfigFile() // Default constructor
+ConfigFile::ConfigFile(const std::string& fileName) // Default constructor
 {
-	configFileName = "DefaultConfig.x"; // Default filename
+	configFileName = fileName; // Default filename
 }
 
 void ConfigFile::parseFile() // Loops through the file and adds contents to data map

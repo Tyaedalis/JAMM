@@ -11,6 +11,7 @@
 #include "Components\config.h"
 #include "Debug\Debug.h"
 
+#define CONFIG_FILENAME "DefaultConfig.x"
 #define ScreenWidth 800
 #define ScreenHeight 600
 
@@ -22,12 +23,13 @@ namespace JAMM
             // Pointer to the game render window
             sf::RenderWindow* GameWindow;
             MemoryManager* MemManager;
+            ConfigFile* Config;
 
             // Default constructor
             Game();
 
-            int InitializeComponents();
-            int ShutdownComponents();
+            void InitializeComponents();
+            void ShutdownComponents();
 
             int Start();
         private:

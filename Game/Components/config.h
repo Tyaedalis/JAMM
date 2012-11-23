@@ -27,8 +27,9 @@ namespace JAMM
 
 	public:
 		// Constructors
-		ConfigFile();
-		//ConfigFile(const std::string&); // for non-deefault filenames
+		//ConfigFile();
+
+		ConfigFile(const std::string&); // for non-default filenames
 
 		// Member functions
 		void parseFile();
