@@ -2,7 +2,7 @@
 
 #include "Logfile.h"
 
-inline void _reportAssertionFailure(const char* expr, const char* comment, const char* file, int line)
+inline void _reportAssertionFailure(const char* expr, const char* comment, const char* file, int32 line)
 {
     Log << "\n=======================================\n"
         << "Debug assertion failed!\n"
@@ -13,7 +13,7 @@ inline void _reportAssertionFailure(const char* expr, const char* comment, const
         << "=======================================\n\n";
 }
 
-inline void _fatalErrorExit(const char* msg, const char* file = "", int line = 0)
+inline void _fatalErrorExit(const char* msg, const char* file = "", int32 line = 0)
 {
     #ifdef DEBUG
         Log << "\n=======================================\n"

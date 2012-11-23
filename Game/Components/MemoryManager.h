@@ -6,7 +6,18 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+#include <sstream>
+
 #include "Debug\Debug.h"
+
+template <typename T>
+string NumToStr(T Number)
+{
+    ostringstream ss;
+    ss << Number;
+    return ss.str();
+}
 
 namespace JAMM
 {
@@ -16,10 +27,11 @@ namespace JAMM
     class _memBank // Base memory bank class, to be derived from with other classes
     {
         protected:
-            unsigned int _size;
+            uint32 _size;
             void* memBank;
         public:
             _memBank(size_t memInitialSize);
+            ~_memBank();
     };
 
     // =================================================================================
@@ -27,9 +39,10 @@ namespace JAMM
     class MemoryPool : public _memBank // Memory pool class, contains functionality for a memory pool
     {
         protected:
-            unsigned int _objSize;
+            uint32 _objSize;
         public:
             MemoryPool(size_t objSize, size_t bankSizeMultiple);
+            ~MemoryPool();
 
             template <class T>
             void* alloc();
@@ -43,7 +56,7 @@ namespace JAMM
         if (sizeof(T) > _objSize)
             ExitWithError("Attempted to allocate oversized object in memory pool.");
 
-        int test = 10;
+        int32 test = 10;
 
         return &test;
     }
@@ -55,8 +68,8 @@ namespace JAMM
         public:
             MemoryManager(); // Default constructor
 
-            int Initialize();
-            int Shutdown();
+            int32 Initialize();
+            int32 Shutdown();
         private:
 
     };

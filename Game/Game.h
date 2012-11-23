@@ -7,6 +7,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "AtomicTypes.h"
 #include "Components\MemoryManager.h"
 #include "Components\config.h"
 #include "Debug\Debug.h"
@@ -31,8 +32,8 @@ namespace JAMM
             void InitializeComponents();
             void ShutdownComponents();
 
-            int Start();
+            int32 Start();
         private:
-            int mainLoop();
+            int32 mainLoop();
     };
 }

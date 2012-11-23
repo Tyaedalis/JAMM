@@ -7,6 +7,8 @@
 
 int main(void)
 {
+    ASSERT(sizeof(float) == 4, "Checking if float is 4 bytes wide");
+
     Log << "Initializing main game class ...\n";
     
     // Create main game class

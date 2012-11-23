@@ -49,13 +49,13 @@ void Game::ShutdownComponents()
 }
 
 // Public method to start the game and run the main loop
-int Game::Start()
+int32 Game::Start()
 {
     return Game::mainLoop();
 }
 
 // Private main loop function
-int Game::mainLoop()
+int32 Game::mainLoop()
 {
     Log << "Entering main loop ...\n";
     

@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "AtomicTypes.h"
+
 using namespace std;
 
 class _log
