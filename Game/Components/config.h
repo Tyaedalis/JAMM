@@ -5,9 +5,12 @@
 
 #pragma once
 
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <map>
+
+#include "Debug\Debug.h"
 
 namespace JAMM
 {

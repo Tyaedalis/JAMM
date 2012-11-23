@@ -2,8 +2,6 @@
 	config.cpp
 	Implementaion file for config file handler. Contains class ConfigFile.
 */
-
-#include <iostream>
 #include "config.h"
 
 using namespace std;
@@ -30,7 +28,7 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
 
 	if (!configFile.good())
 	{
-		cout << "\nError: Could not load configuration file.\n";
+		Log << "\nError: Could not load configuration file.\n";
         return;
 	}
 
@@ -53,7 +51,7 @@ void ConfigFile::parseLine(const string &line)
     // Attempt to split the line
 	if (!StringSplit(line, '=', key, value))
 	{
-		cout << "Config file load Error, while parsing line: " + line;
+		Log << "Config file load Error, while parsing line: " + line;
         return;
 	}
 

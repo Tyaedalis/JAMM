@@ -3,27 +3,29 @@
 	Program entry point, initialization of main game class JAMM::Game
 */
 
-#include <iostream>
 #include "Game\Game.h"
 
 int main(void)
 {
-    std::cout << "Initializing main game class ...\n";
+    Log << "Initializing main game class ...\n";
     
     // Create main game class
     JAMM::Game game;
 
+    // Test debug functionality!
+    // DEBUG_BREAK; // Causes the program to halt and create a breakpoint here
+    // ASSERT(false, "This is a test assertion."); // Allows the program to evaluate an expression and causes a breakpoint if it fails
+    // ExitWithError("This is a test fatal error."); // Allows the program to exit on a fatal error with a message
+
     // Initialize game components
-    game.InitializeWindow();
     game.InitializeComponents();
 
     // Start the game
     game.Start();
 
-    std::cout << "Shutting down game ...\n";
+    Log << "Shutting down game ...\n";
 
     // Shutdown and release game components
-    game.ShutdownWindow();
     game.ShutdownComponents();
 
     return 0;

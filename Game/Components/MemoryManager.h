@@ -6,6 +6,7 @@
 #pragma once
 
 #include <iostream>
+#include "Debug\Debug.h"
 
 namespace JAMM
 {
@@ -15,7 +16,7 @@ namespace JAMM
     class _memBank // Base memory bank class, to be derived from with other classes
     {
         protected:
-            unsigned int size;
+            unsigned int _size;
             void* memBank;
         public:
             _memBank(size_t memInitialSize);
@@ -26,7 +27,7 @@ namespace JAMM
     class MemoryPool : public _memBank // Memory pool class, contains functionality for a memory pool
     {
         protected:
-            int _objSize;
+            unsigned int _objSize;
         public:
             MemoryPool(size_t objSize, size_t bankSizeMultiple);
 
@@ -40,7 +41,7 @@ namespace JAMM
     void* MemoryPool::alloc()
     {
         if (sizeof(T) > _objSize)
-            std::cout << "\nError: Object is too large to fit in a memory pool.\n";
+            Log << "\nError: Object is too large to fit in a memory pool.\n";
 
         int test = 10;
 

@@ -3,8 +3,6 @@
 	Implementation file for the memory manager component. Contains class MemoryManager.
 */
 
-#include <iostream>
-
 #include "MemoryManager.h"
 
 using namespace JAMM;
@@ -13,6 +11,12 @@ using namespace JAMM;
 _memBank::_memBank(size_t memInitialSize)
 {
     memBank = malloc(memInitialSize); // Allocate the specified number of bytes and set the pointer to memBank
+    if (memBank == NULL)
+    {
+
+    }
+
+    _size = memInitialSize;
 }
 
 // ======================= MemoryPool Implementation =======================

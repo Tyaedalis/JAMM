@@ -3,30 +3,21 @@
 	Contains main game class, JAMM::Game.
 */
 
-#include <SFML/Graphics.hpp>
-#include <iostream>
-
 #include "Game.h"
-#include "Components\config.h"
-#include "Components\MemoryManager.h"
 
 using namespace JAMM;
 
 // Default constructor
 Game::Game() { }
 
-// Function to initialize game window
-int Game::InitializeWindow()
-{
-    std::cout << "Initializing game window ...\n";
-    GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
-    
-    return 1;
-}
-
 int Game::InitializeComponents()
 {
-    std::cout << "Initializing memory manager ...\n";
+    Log << "\n============= Begin Startup =============\n";
+
+    Log << "Initializing game window ...\n";
+    GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
+
+    Log << "Initializing memory manager ...\n";
     MemManager = new MemoryManager();
     MemManager->Initialize();
 
@@ -34,25 +25,22 @@ int Game::InitializeComponents()
     MemoryPool testPool(2, 10); // creates a memory pool for 10 objects that are up to 2 bytes large
     testPool.alloc<int>();
 
-    std::cout << "Loading configuration file ...\n";
+    Log << "Loading configuration file ...\n";
     ConfigFile config = ConfigFile();     // Test config functionality
     config.parseFile();
+
+    Log << "\n============= End Startup =============\n\n";
 
     return 1;
 }
 
 int Game::ShutdownComponents()
 {
-    MemManager->Shutdown();
-    delete MemManager;
-
-    return 1;
-}
-
-int Game::ShutdownWindow()
-{
     GameWindow->close();
     delete GameWindow;
+
+    MemManager->Shutdown();
+    delete MemManager;
 
     return 1;
 }
@@ -66,7 +54,7 @@ int Game::Start()
 // Private main loop function
 int Game::mainLoop()
 {
-    std::cout << "Entering main loop ...\n";
+    Log << "Entering main loop ...\n";
     
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
