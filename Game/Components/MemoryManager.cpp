@@ -55,7 +55,7 @@ void MemoryPool::generateFreeList()
 
     _freeObjLinkedListRoot = _baseAddr;
 
-    int32 slots = (_size / _objSize) - 1;
+    const int32 slots = (_size / _objSize) - 1;
 
     ptr32 lastObjPtr;
 
@@ -83,8 +83,12 @@ void MemoryPool::generateFreeList()
 
 bool MemoryPool::free(ptr32 obj, bool checkAlreadyFreed) // TODO: Enable freeing of individual blocks in the memory pool
 {
-    if (obj == NULL)
+    // Ensure that the pointer is not NULL, is not out of the range of the allocated block, and is a multiple of _objSize
+    if (obj == NULL || obj < _baseAddr || obj > (_baseAddr + ((_size - _objSize) / sizeof(ptr32))) || ((obj - _baseAddr) * sizeof(ptr32)) % _objSize != 0)
+    {
+        DEBUG_BREAK; // Uh-oh! A NULL or invalid (out of range) address was passed to the function. You might want to check on that...
         return false;
+    }
 
     ptr32 slotPtr;
 
@@ -107,6 +111,8 @@ bool MemoryPool::free(ptr32 obj, bool checkAlreadyFreed) // TODO: Enable freeing
     slotPtr = _freeObjLinkedListRoot; // Store the current address of _freeObjLinkedListRoot
     _freeObjLinkedListRoot = obj; // Set the address of _freeObjLinkedListRoot to the freed obj
     *_freeObjLinkedListRoot = (uint32)slotPtr; // Complete the link
+
+    obj = NULL;
 
     return true;
 }
