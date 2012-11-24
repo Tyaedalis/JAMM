@@ -1,12 +1,12 @@
 #include "Logfile.h"
 
-_log::_log(char* filename)
+_log::_log(wchar_t* filename)
 {
-    std::cout << "Creating log file " << filename << "...\n\n";
+    std::wcout << L"Creating log file " << filename << L"...\n\n";
 
-    fileStream.open(filename, ios_base::out|ios_base::trunc);
+    fileStream.open(filename, std::ios_base::out|std::ios_base::trunc);
     if (fileStream.fail())
-        Log << "Error: Unable to open log file.";
+        Log << L"Error: Unable to open log file.";
 }
 
 _log::~_log()
@@ -14,4 +14,4 @@ _log::~_log()
      fileStream.close();
 }
 
-_log Log("log.txt");
+_log Log(L"log.txt");

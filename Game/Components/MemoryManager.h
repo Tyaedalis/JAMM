@@ -12,9 +12,17 @@
 #include "Debug\Debug.h"
 
 template <typename T>
-string NumToStr(T Number)
+std::wstring NumToStrw(T Number)
 {
-    ostringstream ss;
+    std::wostringstream ss;
+    ss << Number;
+    return ss.str();
+}
+
+template <typename T>
+std::string NumToStr(T Number)
+{
+    std::ostringstream ss;
     ss << Number;
     return ss.str();
 }

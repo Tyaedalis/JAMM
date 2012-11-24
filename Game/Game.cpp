@@ -12,27 +12,27 @@ Game::Game() { }
 
 void Game::InitializeComponents()
 {
-    Log << "\n============= Begin Startup =============\n";
+    Log << L"\n============= Begin Startup =============\n";
 
-    Log << "Initializing game window ... ";
+    Log << L"Initializing game window ... ";
     GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
     if (GameWindow->isOpen()) 
-        Log << "Done.\n";
+        Log << L"Done.\n";
     else
         ExitWithError("Failed to create render window.");
 
-    Log << "Initializing memory manager ... ";
+    Log << L"Initializing memory manager ... ";
     MemManager = new MemoryManager();
     if (MemManager->Initialize())
-        Log << "Done.\n";
+        Log << L"Done.\n";
     else
         ExitWithError("Failed to initialize memory manager.");
 
-    Log << "Loading configuration file ...\n";
-    Config = new ConfigFile(CONFIG_FILENAME);     // Test config functionality
+    Log << L"Loading configuration file ...\n";
+    Config = new ConfigFile(Config_Filename);     // Test config functionality
     Config->parseFile();
 
-    Log << "\n============= End Startup =============\n\n";
+    Log << L"\n============= End Startup =============\n\n";
 }
 
 void Game::ShutdownComponents()
@@ -53,7 +53,7 @@ int32 Game::Start()
 // Private main loop function
 int32 Game::mainLoop()
 {
-    Log << "Entering main loop ...\n";
+    Log << L"Entering main loop ...\n";
     
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);

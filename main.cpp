@@ -9,7 +9,7 @@ int main(void)
 {
     ASSERT(sizeof(float) == 4, "Checking if float is 4 bytes wide");
 
-    Log << "Initializing main game class ...\n";
+    Log << L"Initializing main game class ...\n";
     
     // Create main game class
     JAMM::Game game;
@@ -25,7 +25,7 @@ int main(void)
     // Start the game
     game.Start();
 
-    Log << "Shutting down game ...\n";
+    Log << L"Shutting down game ...\n";
 
     // Shutdown and release game components
     game.ShutdownComponents();

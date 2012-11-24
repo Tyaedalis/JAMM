@@ -12,7 +12,8 @@
 #include "Components\config.h"
 #include "Debug\Debug.h"
 
-#define CONFIG_FILENAME "DefaultConfig.x"
+const std::wstring Config_Filename = L"DefaultConfig.x";
+
 #define ScreenWidth 800
 #define ScreenHeight 600
 

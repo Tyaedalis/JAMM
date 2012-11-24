@@ -4,15 +4,14 @@
 */
 #include "config.h"
 
-using namespace std;
 using namespace JAMM;
 
 // Forward function declaration, implementation is below
-bool StringSplit(const string &input, char delimiter, string &result1, string &result2);
+bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2);
 
 // ================ ConfigFile class members ================
 
-ConfigFile::ConfigFile(const std::string& fileName) // Default constructor
+ConfigFile::ConfigFile(const std::wstring& fileName) // Default constructor
 {
 	configFileName = fileName; // Default filename
 }
@@ -20,40 +19,42 @@ ConfigFile::ConfigFile(const std::string& fileName) // Default constructor
 void ConfigFile::parseFile() // Loops through the file and adds contents to data map
 {
 	// Variables
-	std::ifstream configFile;
-	string line;
+	std::wifstream configFile;
+	std::wstring line;
 
 	// load the file
 	configFile.open(configFileName);
 
 	if (!configFile.good())
 	{
-		Log << "\nError: Could not load configuration file.\n\n";
+		Log << L"\nError: Could not load configuration file.\n\n";
         return;
 	}
 
 	while (!configFile.eof())
 	{
-        Log << line << "\n"; // Print the contents of the config file to the console
+        Log << line << L"\n"; // Print the contents of the config file to the console
 
 		getline(configFile, line);
 		parseLine(line);
 	}
+
+    configFile.close();
 }
 
-void ConfigFile::parseLine(const string &line)
+void ConfigFile::parseLine(const std::wstring &line)
 {
     // Break out of function if line is blank
     if (line.length() == 0)
         return;
 
 	// Variables
-	string key(""), value(""); // data to be pushed to data map, intialized with empty strings
+	std::wstring key(L""), value(L""); // data to be pushed to data map, intialized with empty strings
 
     // Attempt to split the line
-	if (!StringSplit(line, '=', key, value))
+	if (!StringSplit(line, L'=', key, value))
 	{
-		Log << "Config file load Error, while parsing line: " + line;
+		Log << L"Config file load Error, while parsing line: " + line;
         return;
 	}
 
@@ -75,10 +76,10 @@ void ConfigFile::parseLine(const string &line)
 //
 // Anyway, this will take the "input" string, split it at the "delimiter" character, and put the 2 halves in "result1" and 
 // "result2", or return false if something goes wrong
-bool StringSplit(const string &input, char delimiter, string &result1, string &result2)
+bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2)
 {
     // Set both result1 and result2 to blank strings
-    result1 = result2 = "";
+    result1 = result2 = L"";
 
     // Check to make sure input is at least 1 character using "input.length()". If check fails, return false
 

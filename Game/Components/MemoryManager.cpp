@@ -12,14 +12,14 @@ using namespace JAMM;
 // Constructor
 _memBank::_memBank(uint32 memInitialSize)
 {
-    string sNumBytes = NumToStr<uint32>(memInitialSize);
-    string error = string("Failed to allocate ") + sNumBytes + " bytes of memory for memory bank.";
+    std::string sNumBytes = NumToStr<uint32>(memInitialSize);
+    std::string error = std::string("Failed to allocate ") + sNumBytes + " bytes of memory for memory bank.";
 
     _baseAddr = (ptr32)malloc(memInitialSize); // Allocate the specified number of bytes and set the pointer to memBank
     if (_baseAddr == NULL)
         ExitWithError(error.c_str());
 
-    Log << "*Allocated a " << memInitialSize << " byte memory bank at 0x" << _baseAddr << "\n";
+    Log << L"*Allocated a " << memInitialSize << L" byte memory bank at 0x" << _baseAddr << L"\n";
 
     _size = memInitialSize;
 }
@@ -30,7 +30,7 @@ _memBank::~_memBank()
     // Release memory bank
     free(_baseAddr);
 
-    Log << "*Released " << _size << " byte memory bank at 0x" << _baseAddr << "\n";
+    Log << L"*Released " << _size << L" byte memory bank at 0x" << _baseAddr << L"\n";
 
     // Set pointer to null
     _baseAddr = NULL;
@@ -41,7 +41,7 @@ MemoryPool::MemoryPool(uint32 objSize, uint32 bankSizeMultiple)
     : _memBank(objSize % sizeof(ptr32) == 0 ? objSize * bankSizeMultiple : bankSizeMultiple * (objSize += sizeof(ptr32) - objSize % sizeof(ptr32))) // Ensure object size is a multiple of sizeof(ptr32)
 { 
     if (objSize < sizeof(ptr32))
-        ExitWithError(string("Attempted to create memory pool for objects smaller than " + NumToStr<uint32>(sizeof(ptr32)) + " bytes.").c_str());
+        ExitWithError(std::string("Attempted to create memory pool for objects smaller than " + NumToStr<uint32>(sizeof(ptr32)) + " bytes.").c_str());
 
     _objSize = objSize;
 
@@ -65,7 +65,7 @@ void MemoryPool::generateFreeList()
         ptr32 nextObjPtr = objPtr + step;
         lastObjPtr = nextObjPtr;
 
-        ASSERT(nextObjPtr <= (ptr32)(_baseAddr + ((_size - _objSize) / sizeof(ptr32))), "Value of next ptr shouldn't exceed last slot in memory pool.");
+        ASSERT(nextObjPtr <= (ptr32)(_baseAddr + ((_size - _objSize) / sizeof(ptr32))), L"Value of next ptr shouldn't exceed last slot in memory pool.");
 
         // Log << "current item " << objPtr << "\n"; // DEBUG
         // Log << "next item    " << nextObjPtr << "\n"; // DEBUG
@@ -74,7 +74,7 @@ void MemoryPool::generateFreeList()
 
         // Log << "value cur    " << (ptr32)*objPtr << "\n\n"; // DEBUG
 
-        ASSERT((ptr32)*objPtr == nextObjPtr, "Value of pointer should equal address of next.");
+        ASSERT((ptr32)*objPtr == nextObjPtr, L"Value of pointer should equal address of next.");
     }
 
     *lastObjPtr = NULL; // Set the last item in the list to a null pointer

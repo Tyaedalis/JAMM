@@ -6,20 +6,18 @@
 
 #include "AtomicTypes.h"
 
-using namespace std;
-
 class _log
 {
     public:
-        std::ofstream fileStream;
+        std::wofstream fileStream;
 
-        _log(char*filename);
+        _log(wchar_t* filename);
         ~_log();
 
         template<class t>
         friend _log &operator<<(_log &left, const t& right)
         {
-            std::cout << right;
+            std::wcout << right;
             left.fileStream << right;
             left.fileStream.flush();
             return left;  
@@ -28,7 +26,7 @@ class _log
         template<class t>
         friend _log &operator<<(_log &left, const t* right)
         {
-            std::cout << right;
+            std::wcout << right;
             left.fileStream << right;
             left.fileStream.flush();
             return left;  

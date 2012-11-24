@@ -14,22 +14,22 @@
 
 namespace JAMM
 {
-	typedef std::map<std::string, std::string> ConfigType;
+	typedef std::map<std::wstring, std::wstring> strMap;
 
 	class ConfigFile
 	{
 	private:
-		ConfigType data; // map of string pairs
-		std::string configFileName;
+		strMap data; // map of string pairs
+		std::wstring configFileName;
 
 		// Member functions
-		void parseLine(const std::string&);
+		void parseLine(const std::wstring&);
 
 	public:
 		// Constructors
 		//ConfigFile();
 
-		ConfigFile(const std::string&); // for non-default filenames
+		ConfigFile(const std::wstring&); // for non-default filenames
 
 		// Member functions
 		void parseFile();
