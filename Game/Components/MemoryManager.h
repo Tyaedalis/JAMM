@@ -35,8 +35,8 @@ namespace JAMM
     class _memBank // Base memory bank class, to be derived from with other classes
     {
         protected:
-            ptr32 _baseAddr;
-            uint32 _size;
+            constPtr32 _baseAddr;
+            const uint32 _size;
         public:
             _memBank(uint32 memInitialSize);
             ~_memBank();
@@ -48,7 +48,7 @@ namespace JAMM
     {
         protected:
             ptr32 _freeObjLinkedListRoot;
-            uint32 _objSize;
+            const uint32 _objSize;
 
             void generateFreeList();
         public:
@@ -56,13 +56,13 @@ namespace JAMM
             ~MemoryPool();
 
             template <class T>
-            ptr32 alloc();
+            T* alloc();
 
             bool free(ptr32 obj, bool checkAlreadyFreed = true);
     };
 
     template <class T>
-    ptr32 MemoryPool::alloc()
+    T* MemoryPool::alloc()
     {
         if (sizeof(T) > _objSize)
             ExitWithError("Attempted to allocate oversized object in memory pool.");
@@ -70,10 +70,10 @@ namespace JAMM
         if (_freeObjLinkedListRoot != NULL)
         {
             ptr32 memBlock = _freeObjLinkedListRoot;
-            _freeObjLinkedListRoot = (ptr32)*memBlock;
+            _freeObjLinkedListRoot = reinterpret_cast<ptr32>(*memBlock);
             *memBlock = NULL;
 
-            return memBlock;
+            return reinterpret_cast<T*>(memBlock);
         }
         else
             return NULL;

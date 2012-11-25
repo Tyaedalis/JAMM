@@ -12,3 +12,4 @@ typedef unsigned __int64 uint64;
 
 typedef float f32;
 typedef unsigned __int32* ptr32;
+typedef unsigned const __int32* const constPtr32;

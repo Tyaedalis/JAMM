@@ -12,8 +12,8 @@ bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &res
 // ================ ConfigFile class members ================
 
 ConfigFile::ConfigFile(const std::wstring& fileName) // Default constructor
+    : configFileName(fileName)
 {
-	configFileName = fileName; // Default filename
 }
 
 void ConfigFile::parseFile() // Loops through the file and adds contents to data map
