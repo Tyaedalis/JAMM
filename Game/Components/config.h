@@ -8,9 +8,19 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <map>
 
 #include "Debug\Debug.h"
+
+template <class T>
+T StringToValue(std::wstring &str)
+{
+    T value;
+    std::wistringstream (str) >> value;
+
+    return value;
+}
 
 namespace JAMM
 {
@@ -23,9 +33,9 @@ namespace JAMM
 		std::wstring configFileName;
 
 		// Member functions
-		void parseLine(const std::wstring&);
-
-	public:
+        bool _createDefaultConfig();
+		void _parseLine(const std::wstring&);
+    public:
 		// Constructors
 		//ConfigFile();
 
@@ -33,5 +43,17 @@ namespace JAMM
 
 		// Member functions
 		void parseFile();
+        
+        template <class T>
+        T GetValue(const std::wstring &key, const T &defValue = NULL)
+        {
+            if (data[key] != L"")
+                return StringToValue<T>(data[key]);
+
+            data[key] = defValue;
+            return defValue;
+        }
 	};
+
+    ConfigFile& Configuration();
 }

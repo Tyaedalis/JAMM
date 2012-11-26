@@ -14,9 +14,6 @@
 
 const std::wstring Config_Filename = L"DefaultConfig.x";
 
-#define ScreenWidth 800
-#define ScreenHeight 600
-
 namespace JAMM
 {
     class Game
@@ -25,7 +22,6 @@ namespace JAMM
             // Pointer to the game render window
             sf::RenderWindow* GameWindow;
             MemoryManager* MemManager;
-            ConfigFile* Config;
 
             // Default constructor
             Game();
@@ -35,6 +31,9 @@ namespace JAMM
 
             int32 Start();
         private:
+            uint32 _screenWidth;
+            uint32 _screenHeight;
+
             int32 mainLoop();
     };
 }

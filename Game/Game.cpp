@@ -8,14 +8,23 @@
 using namespace JAMM;
 
 // Default constructor
-Game::Game() { }
+Game::Game()
+    : _screenWidth(800),
+      _screenHeight(600)
+{ }
 
 void Game::InitializeComponents()
 {
     Log << L"\n============= Begin Startup =============\n";
 
+    Log << L"Loading configuration file ...\n\n";     
+    Configuration().parseFile();
+
+    _screenWidth = Configuration().GetValue<uint32>(L"gScreenWidth", _screenWidth);
+    _screenHeight = Configuration().GetValue<uint32>(L"gScreenHeight", _screenHeight);
+
     Log << L"Initializing game window ... ";
-    GameWindow = new sf::RenderWindow(sf::VideoMode(ScreenWidth, ScreenHeight), "Project JAMM");
+    GameWindow = new sf::RenderWindow(sf::VideoMode(_screenWidth, _screenHeight), "Project JAMM");
     if (GameWindow->isOpen()) 
         Log << L"Done.\n";
     else
@@ -27,10 +36,6 @@ void Game::InitializeComponents()
         Log << L"Done.\n";
     else
         ExitWithError("Failed to initialize memory manager.");
-
-    Log << L"Loading configuration file ...\n";
-    Config = new ConfigFile(Config_Filename);     // Test config functionality
-    Config->parseFile();
 
     Log << L"\n============= End Startup =============\n\n";
 }

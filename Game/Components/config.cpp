@@ -2,17 +2,31 @@
 	config.cpp
 	Implementaion file for config file handler. Contains class ConfigFile.
 */
+
+#include <iostream>
+#include <string>
+#include <algorithm> 
+#include <functional> 
+#include <cctype>
+#include <locale>
+
 #include "config.h"
+#include "GlobalConstants.h"
 
 using namespace JAMM;
 
 // Forward function declaration, implementation is below
+static inline std::wstring &ltrim(std::wstring &s);
+static inline std::wstring &rtrim(std::wstring &s);
+static inline std::wstring &trim(std::wstring &s);
+
 bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2);
 
 // ================ ConfigFile class members ================
 
 ConfigFile::ConfigFile(const std::wstring& fileName) // Default constructor
-    : configFileName(fileName)
+    : data(),
+      configFileName(fileName)
 {
 }
 
@@ -22,27 +36,37 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
 	std::wifstream configFile;
 	std::wstring line;
 
-	// load the file
-	configFile.open(configFileName);
+    while (1)
+    {
+	    // load the file
+	    configFile.open(configFileName);
 
-	if (!configFile.good())
-	{
-		Log << L"\nError: Could not load configuration file.\n\n";
-        return;
-	}
+	    if (!configFile.good())
+	    {
+            Log << "No configuration file found, creating default file: " << configFileName << "\n\n";
+
+            bool success = _createDefaultConfig();
+            if (!success)
+		        ExitWithError("Error: Could not load configuration file.");
+	    }
+        else
+            break;
+    }
+
+    Log << "== Parsing " << configFileName << " ==\n";
 
 	while (!configFile.eof())
 	{
-        Log << line << L"\n"; // Print the contents of the config file to the console
-
 		getline(configFile, line);
-		parseLine(line);
+		_parseLine(line);
 	}
+
+    Log << L"\nConfig file loaded, " << data.size() << " entries.\n\n";
 
     configFile.close();
 }
 
-void ConfigFile::parseLine(const std::wstring &line)
+void ConfigFile::_parseLine(const std::wstring &line)
 {
     // Break out of function if line is blank
     if (line.length() == 0)
@@ -54,40 +78,81 @@ void ConfigFile::parseLine(const std::wstring &line)
     // Attempt to split the line
 	if (!StringSplit(line, L'=', key, value))
 	{
-		Log << L"Config file load Error, while parsing line: " + line;
+		Log << L"Config file load Error, while parsing line: " << line;
         return;
 	}
 
-    //  ==================== IMPORTANT ====================
-    //  It is important to strip the whitespace characters from the key and value pair!
-    //  So that should be done Here before adding the pair to the map.
-    //  ===================================================
+    key = trim(key);
+    value = trim(value);
 
+    Log << L"[" << key << L"] = \"" << value << "\"\n";
 	data[key] = value;
+
 	return;
 }
 
-// ================ Helper Functions ================
+bool ConfigFile::_createDefaultConfig()
+{
+    std::wofstream ofStr(configFileName, std::ios_base::out|std::ios_base::trunc);
+    if (ofStr.fail())
+        return false;
 
-// If you can't find a standard library function, do it yourself!
-// Notice that this function isn't part of the "ConfigFile" class, and that's okay! It's just local to this file.
-// We might want to move this later to a "StringTools.cpp" file if we find the need for this function elsewhere in the game,
-// or write additional helper functions.
-//
-// Anyway, this will take the "input" string, split it at the "delimiter" character, and put the 2 halves in "result1" and 
-// "result2", or return false if something goes wrong
+    ofStr << Config_Default;
+    ofStr.flush();
+    ofStr.close();
+
+    return true;
+}
+
+
+// ================ Helper Functions ================
 bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2)
 {
     // Set both result1 and result2 to blank strings
     result1 = result2 = L"";
 
-    // Check to make sure input is at least 1 character using "input.length()". If check fails, return false
+    // Check to make sure input is at least 1 character
+    if (input.length() < 1)
+        return false;
 
+    uint32 i = 0;
+    std::wstring* strPtr(&result1);
 
-    // Loop through each charactor in "input", using "input[index]", and if the character is not equal to 'delimiter'
-    // then add the character to the end of "result1" via "result1.push_back(input[index])". If the character equals 
-    // 'delimiter', then skip that character, then continue adding the rest of the characters to 'result2' until you hit
-    // the end of the string.
+    while (i < input.length())
+    {
+        if (input[i] != delimiter)
+            strPtr->push_back(input[i]);
+        else
+            strPtr = &result2;
+
+        i++;
+    }
 
     return true;
+}
+
+// trim from start
+static inline std::wstring &ltrim(std::wstring &s) 
+{
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+        return s;
+}
+
+// trim from end
+static inline std::wstring &rtrim(std::wstring &s) 
+{
+        s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+        return s;
+}
+
+// trim from both ends
+static inline std::wstring &trim(std::wstring &s)
+{
+        return ltrim(rtrim(s));
+}
+
+ConfigFile& JAMM::Configuration()
+{
+    static ConfigFile config(Config_Filename);
+    return config;
 }
