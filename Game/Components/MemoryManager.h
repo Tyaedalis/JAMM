@@ -11,6 +11,14 @@
 
 #include "Game\Debug\Debug.h"
 
+/*
+==========================
+template <typename T>
+std::wstring NumToStrw(T Number)
+
+Helper function that takes a variable of any type T and attempts to convert it to a wide string
+==========================
+*/
 template <typename T>
 std::wstring NumToStrw(T Number)
 {
@@ -19,6 +27,14 @@ std::wstring NumToStrw(T Number)
     return ss.str();
 }
 
+/*
+==========================
+template <typename T>
+std::string NumToStrw(T Number)
+
+Helper function that takes a variable of any type T and attempts to convert it to a string
+==========================
+*/
 template <typename T>
 std::string NumToStr(T Number)
 {
@@ -30,39 +46,55 @@ std::string NumToStr(T Number)
 namespace JAMM
 {
 
-    // =================================================================================
-
-    class _memBank // Base memory bank class, to be derived from with other classes
+    /*
+    ==========================
+    class _memBank
+	Base memory bank class, to be derived from with other classes
+    ==========================
+    */
+    class MemoryAllocator
     {
         protected:
             constPtr32 _baseAddr;
             const uint32 _size;
         public:
-            _memBank(uint32 memInitialSize);
-            virtual ~_memBank();
+            MemoryAllocator(uint32 memInitialSize);
+            virtual ~MemoryAllocator();
     };
 
-    // =================================================================================
-
-    class MemoryPool : public _memBank // Memory pool class, contains functionality for a memory pool
+    /*
+    ==========================
+    class MemoryPool, derives from class _memBank
+	Memory pool class, contains functionality for a memory pool allocator
+    ==========================
+    */
+    class MemoryPool : public MemoryAllocator
     {
         protected:
             ptr32 _freeObjLinkedListRoot;
             const uint32 _objSize;
 
-            void generateFreeList();
+            void _generateFreeList();
         public:
             MemoryPool(uint32 objSize, uint32 bankSizeMultiple);
-            ~MemoryPool();
+            virtual ~MemoryPool();
 
             template <class T>
-            T* alloc();
+            T* Alloc();
 
-            bool free(ptr32 obj, bool checkAlreadyFreed = true);
+            bool Free(ptr32 obj, bool checkAlreadyFreed = true);
     };
 
+    /*
+    ==========================
+    template <class T> T* MemoryPool::Alloc()
+
+	Member function of the MemoryPool class
+    Returns pointer to a valid memory chunk within the pool as long as sizeof(T) is less than or equal to the pool size
+    ==========================
+    */
     template <class T>
-    T* MemoryPool::alloc()
+    T* MemoryPool::Alloc()
     {
         if (sizeof(T) > _objSize)
             ExitWithError("Attempted to allocate oversized object in memory pool.");
@@ -79,8 +111,12 @@ namespace JAMM
             return NULL;
     }
 
-    // =================================================================================
-
+     /*
+    ==========================
+    class MemoryManager
+	Keeps track and properly disposes of any created memory allocators
+    ==========================
+    */
     class MemoryManager
     {
         public:

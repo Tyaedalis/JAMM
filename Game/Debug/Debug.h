@@ -1,3 +1,10 @@
+/*
+==========================
+Debug.h
+Contains various features to help with debugging the game
+==========================
+*/
+
 #pragma once
 
 #include "Game\Debug\Logfile.h"

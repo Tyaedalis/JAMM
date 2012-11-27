@@ -1,3 +1,8 @@
+/*
+    GlobalConstants.cpp
+    Contains global constant variable initializations
+*/
+
 #include "Game\GlobalConstants.h"
 
 const std::wstring JAMM::Config_Filename(L"config.ini");

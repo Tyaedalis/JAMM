@@ -1,3 +1,8 @@
+/*
+    GlobalConstants.h
+    Contains global constant variable declarations
+*/
+
 #include <iostream>
 #include <string>
 

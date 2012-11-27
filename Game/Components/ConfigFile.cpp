@@ -14,16 +14,30 @@ static inline std::wstring &trim(std::wstring &s);
 
 bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2);
 
-// ================ ConfigFile class members ================
-
-ConfigFile::ConfigFile(const std::wstring& fileName) // Default constructor
-    : data(),
-      configFileName(fileName)
+/*
+==========================
+ConfigFile::ConfigFile(const std::wstring& fileName)
+Constructor, initializes member variables
+==========================
+*/
+ConfigFile::ConfigFile(const std::wstring& fileName)
+    : _configData(),
+      _configFileName(fileName)
 {
+    Log << L"Loading configuration file " << fileName << " ...\n\n";
+    ReloadFile();
 }
 
-void ConfigFile::parseFile() // Loops through the file and adds contents to data map
+/*
+==========================
+void ConfigFile::ReloadFile()
+Public member function, clears any stored configuration data and reloads the file
+==========================
+*/
+void ConfigFile::ReloadFile()
 {
+    _configData.clear();
+
 	// Variables
 	std::wifstream configFile;
 	std::wstring line;
@@ -31,11 +45,11 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
     while (1)
     {
 	    // load the file
-	    configFile.open(configFileName);
+	    configFile.open(_configFileName);
 
 	    if (!configFile.good())
 	    {
-            Log << "No configuration file found, creating default file: " << configFileName << "\n\n";
+            Log << "No configuration file found, creating default file: " << _configFileName << "\n\n";
 
             bool success = _createDefaultConfig();
             if (!success)
@@ -45,7 +59,7 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
             break;
     }
 
-    Log << "== Parsing " << configFileName << " ==\n";
+    Log << "-Parsing " << _configFileName << "-\n";
 
 	while (!configFile.eof())
 	{
@@ -53,11 +67,17 @@ void ConfigFile::parseFile() // Loops through the file and adds contents to data
 		_parseLine(line);
 	}
 
-    Log << L"\nConfig file loaded, " << data.size() << " entries.\n\n";
+    Log << L"\nConfig file loaded, " << _configData.size() << " entries.\n\n";
 
     configFile.close();
 }
 
+/*
+==========================
+void ConfigFile::_parseLine(const std::wstring &line)
+Private member function, parses a single line from the config file and adds the key\value pair to the _configData map.
+==========================
+*/
 void ConfigFile::_parseLine(const std::wstring &line)
 {
     // Break out of function if line is blank
@@ -78,14 +98,20 @@ void ConfigFile::_parseLine(const std::wstring &line)
     value = trim(value);
 
     Log << L"[" << key << L"] = \"" << value << "\"\n";
-	data[key] = value;
+	_configData[key] = value;
 
 	return;
 }
 
+/*
+==========================
+bool ConfigFile::_createDefaultConfig()
+Generates and saves the default configuration data to the config file
+==========================
+*/
 bool ConfigFile::_createDefaultConfig()
 {
-    std::wofstream ofStr(configFileName, std::ios_base::out|std::ios_base::trunc);
+    std::wofstream ofStr(_configFileName, std::ios_base::out|std::ios_base::trunc);
     if (ofStr.fail())
         return false;
 
@@ -97,7 +123,12 @@ bool ConfigFile::_createDefaultConfig()
 }
 
 
-// ================ Helper Functions ================
+/*
+==========================
+bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2)
+Takes a string 'input' and splits it at the 'delimiter', storing the two parts in 'result1' and 'result2'
+==========================
+*/
 bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &result1, std::wstring &result2)
 {
     // Set both result1 and result2 to blank strings
@@ -123,26 +154,47 @@ bool StringSplit(const std::wstring &input, wchar_t delimiter, std::wstring &res
     return true;
 }
 
-// trim from start
+/*
+==========================
+static inline std::wstring &ltrim(std::wstring &s) 
+Trims whitespace charactors from the beginning of a wide string
+==========================
+*/
 static inline std::wstring &ltrim(std::wstring &s) 
 {
         s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
         return s;
 }
 
-// trim from end
+/*
+==========================
+static inline std::wstring &rtrim(std::wstring &s) 
+Trims whitespace charactors from the end of a wide string
+==========================
+*/
 static inline std::wstring &rtrim(std::wstring &s) 
 {
         s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
         return s;
 }
 
-// trim from both ends
+/*
+==========================
+static inline std::wstring &trim(std::wstring &s)
+Trims whitespace charactors from both ends of a wide string
+==========================
+*/
 static inline std::wstring &trim(std::wstring &s)
 {
         return ltrim(rtrim(s));
 }
 
+/*
+==========================
+ConfigFile& JAMM::Configuration()
+Function implemented in namespace scope that returns a global static instance of the default ConfigFile
+==========================
+*/
 ConfigFile& JAMM::Configuration()
 {
     static ConfigFile config(Config_Filename);

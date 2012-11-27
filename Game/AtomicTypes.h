@@ -1,3 +1,8 @@
+/*
+	AtomicTypes.h
+	Contains type definitions for various atomic value types
+*/
+
 #pragma once
 
 typedef __int8 int8;

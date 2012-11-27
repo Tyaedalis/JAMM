@@ -1,3 +1,10 @@
+/*
+==========================
+Logfile.cpp
+Header file for the _log class
+==========================
+*/
+
 #pragma once
 
 #include <iostream>
@@ -33,4 +40,11 @@ class _log
         }
 };
 
+/*
+==========================
+extern _log Log;
+Global variable declaration of the _log class, allows output of messages to the log file and console simultaneously.
+Initialization is in Logfile.cpp
+==========================
+*/
 extern _log Log;

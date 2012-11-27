@@ -5,6 +5,12 @@
 
 #include "Game\Game.h"
 
+/*
+	==========================
+    int main(void)
+	Program entry point, initialization of main game class JAMM::Game
+    ==========================
+*/
 int main(void)
 {
     ASSERT(sizeof(float) == 4, "Checking if float is 4 bytes wide");

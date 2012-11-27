@@ -7,18 +7,26 @@
 
 using namespace JAMM;
 
-// Default constructor
+/*
+==========================
+Game::Game()
+Default constructor for the Game class, initializes member variables
+==========================
+*/
 Game::Game()
     : _screenWidth(800),
       _screenHeight(600)
 { }
 
+/*
+==========================
+void Game::InitializeComponents()
+Function that is called from main() to initialize the game sub-systems
+==========================
+*/
 void Game::InitializeComponents()
 {
     Log << L"\n============= Begin Startup =============\n";
-
-    Log << L"Loading configuration file ...\n\n";     
-    Configuration().parseFile();
 
     _screenWidth = Configuration().GetValue<uint32>(L"gScreenWidth", _screenWidth);
     _screenHeight = Configuration().GetValue<uint32>(L"gScreenHeight", _screenHeight);
@@ -40,6 +48,12 @@ void Game::InitializeComponents()
     Log << L"\n============= End Startup =============\n\n";
 }
 
+/*
+==========================
+void Game::ShutdownComponents()
+Function that is called from main() to properly shutdown the game sub-systems, and disposes of resources
+==========================
+*/
 void Game::ShutdownComponents()
 {
     GameWindow->close();
@@ -49,13 +63,23 @@ void Game::ShutdownComponents()
     delete MemManager;
 }
 
-// Public method to start the game and run the main loop
+/*
+==========================
+int32 Game::Start()
+Function that is called from main() to start the game
+==========================
+*/
 int32 Game::Start()
 {
     return Game::mainLoop();
 }
 
-// Private main loop function
+/*
+==========================
+int32 Game::mainLoop()
+Private function which contains the main game loop that updates and renders the game
+==========================
+*/
 int32 Game::mainLoop()
 {
     Log << L"Entering main loop ...\n";

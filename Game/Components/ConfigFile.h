@@ -18,6 +18,12 @@
 #include "Game\GlobalConstants.h"
 #include "Game\Debug\Debug.h"
 
+/*
+==========================
+template <class T> T StringToValue(std::wstring &str)
+Helper function, converts the contents of a wide string to a value type
+==========================
+*/
 template <class T>
 T StringToValue(std::wstring &str)
 {
@@ -29,36 +35,41 @@ T StringToValue(std::wstring &str)
 
 namespace JAMM
 {
-	typedef std::map<std::wstring, std::wstring> strMap;
-
+    /*
+    ==========================
+    class ConfigFile
+    Handles the loading and parsing of configuration files
+    ==========================
+    */
 	class ConfigFile
 	{
-	private:
-		strMap data; // map of string pairs
-		std::wstring configFileName;
+	    private:
+		    std::map<std::wstring, std::wstring> _configData; // map of string pairs
+		    std::wstring _configFileName;
 
-		// Member functions
-        bool _createDefaultConfig();
-		void _parseLine(const std::wstring&);
-    public:
-		// Constructors
-		//ConfigFile();
+            bool _createDefaultConfig();
+		    void _parseLine(const std::wstring&);
+        public:
+		    ConfigFile(const std::wstring&);
 
-		ConfigFile(const std::wstring&); // for non-default filenames
-
-		// Member functions
-		void parseFile();
+		    void ReloadFile();
         
-        template <class T>
-        T GetValue(const std::wstring &key, const T &defValue = NULL)
-        {
-            if (data[key] != L"")
-                return StringToValue<T>(data[key]);
+            template <class T>
+            T GetValue(const std::wstring &key, const T &defValue = NULL)
+            {
+                if (_configData[key] != L"")
+                    return StringToValue<T>(_configData[key]);
 
-            data[key] = defValue;
-            return defValue;
-        }
+                _configData[key] = defValue;
+                return defValue;
+            }
 	};
 
+    /*
+    ==========================
+    ConfigFile& Configuration();
+    Function declared in namespace scope that returns a global static instance of the default ConfigFile
+    ==========================
+    */
     ConfigFile& Configuration();
 }

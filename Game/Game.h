@@ -16,6 +16,12 @@ const std::wstring Config_Filename = L"DefaultConfig.x";
 
 namespace JAMM
 {
+    /*
+	==========================
+    class Game
+	Main game class, connects all of the game sub-components together
+    ==========================
+    */
     class Game
     {
         public:

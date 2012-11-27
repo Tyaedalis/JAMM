@@ -7,10 +7,13 @@
 
 using namespace JAMM;
 
-// ======================= _memBank Implementation =======================
-
-// Constructor
+/*
+==========================
 _memBank::_memBank(uint32 memInitialSize)
+Constructor for _memBank class, allocates memory amount specified in arg
+==========================
+*/
+MemoryAllocator::MemoryAllocator(uint32 memInitialSize)
     : _baseAddr(static_cast<ptr32>(malloc(memInitialSize))), // Allocate the specified number of bytes and initialize the _baseAddr pointer
       _size(memInitialSize) // Initialize memory bank size constant
 {
@@ -23,8 +26,13 @@ _memBank::_memBank(uint32 memInitialSize)
     Log << L"*Allocated a " << memInitialSize << L" byte memory bank at 0x" << _baseAddr << L"\n";
 }
 
-// Destructor
+/*
+==========================
 _memBank::~_memBank()
+Destructor for _memBank class, releases allocated memory
+==========================
+*/
+MemoryAllocator::~MemoryAllocator()
 {
     // Release memory bank
     free(const_cast<ptr32>(_baseAddr));
@@ -32,19 +40,30 @@ _memBank::~_memBank()
     Log << L"*Released " << _size << L" byte memory bank at 0x" << _baseAddr << L"\n";
 }
 
-// ======================= MemoryPool Implementation =======================
+/*
+==========================
 MemoryPool::MemoryPool(uint32 objSize, uint32 bankSizeMultiple)
-    : _memBank(objSize % sizeof(ptr32) == 0 ? objSize * bankSizeMultiple : bankSizeMultiple * (objSize += sizeof(ptr32) - objSize % sizeof(ptr32))), // Ensure object size is a multiple of sizeof(ptr32), then pass result to base class
+Constructor for MemoryPool class, ensures memory byte size is a multiple of sizeof(ptr32), with enough for bankSizeMultiple number of objects
+==========================
+*/
+MemoryPool::MemoryPool(uint32 objSize, uint32 bankSizeMultiple)
+    : MemoryAllocator(objSize % sizeof(ptr32) == 0 ? objSize * bankSizeMultiple : bankSizeMultiple * (objSize += sizeof(ptr32) - objSize % sizeof(ptr32))), // Ensure object size is a multiple of sizeof(ptr32), then pass result to base class
       _objSize(objSize) // Initialize object size constant
 { 
     if (objSize < sizeof(ptr32))
         ExitWithError(std::string("Attempted to create memory pool for objects smaller than " + NumToStr<uint32>(sizeof(ptr32)) + " bytes.").c_str());
 
-    generateFreeList();
+    _generateFreeList();
 }
 
-// Uses the free blocks of memory in the pool to store a linked list containing all of the free blocks
+/*
+==========================
 void MemoryPool::generateFreeList()
+Private member function for the MemoryPool class
+Generates a linked list of all the available memory slots, and stores the list items in the unused slots
+==========================
+*/
+void MemoryPool::_generateFreeList()
 {
     uint32 step = _objSize / sizeof(ptr32);
 
@@ -77,7 +96,14 @@ void MemoryPool::generateFreeList()
 
 }
 
-bool MemoryPool::free(ptr32 obj, bool checkAlreadyFreed) // TODO: Enable freeing of individual blocks in the memory pool
+/*
+==========================
+bool MemoryPool::Free(ptr32 obj, bool checkAlreadyFreed)
+Public function of the MemoryPool class
+Releases a used memory slot within the pool, specified by its pointer in arg 1, and adds it to the linked list of free slots
+==========================
+*/
+bool MemoryPool::Free(ptr32 obj, bool checkAlreadyFreed)
 {
     // Ensure that the pointer is not NULL, is not out of the range of the allocated block, and is a multiple of _objSize
     if (obj == NULL || obj < _baseAddr || obj > (_baseAddr + ((_size - _objSize) / sizeof(ptr32))) || ((obj - _baseAddr) * sizeof(ptr32)) % _objSize != 0)
@@ -113,18 +139,39 @@ bool MemoryPool::free(ptr32 obj, bool checkAlreadyFreed) // TODO: Enable freeing
     return true;
 }
 
+/*
+==========================
+MemoryPool::~MemoryPool() { }
+Destructor for MemoryPool class, base class destructor already contains clean-up code
+==========================
+*/
 MemoryPool::~MemoryPool() { }
 
-// ======================= MemoryManager Implementation =======================
-
-// Default constructor
+/*
+==========================
+MemoryManager::MemoryManager() { }
+Default constructor for the MemoryManager class
+==========================
+*/
 MemoryManager::MemoryManager() { }
 
+/*
+==========================
+int32 MemoryManager::Initialize()
+Initializes MemoryManager members
+==========================
+*/
 int32 MemoryManager::Initialize()
 {
     return 1;
 }
 
+/*
+==========================
+int32 MemoryManager::Shutdown()
+Releases all memory allocaters tracked by MemoryManager
+==========================
+*/
 int32 MemoryManager::Shutdown()
 {
     return 1;
