@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Logfile.h"
+#include "Game\Debug\Logfile.h"
 
 inline void _reportAssertionFailure(const char* expr, const char* comment, const char* file, int32 line)
 {

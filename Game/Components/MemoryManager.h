@@ -9,7 +9,7 @@
 #include <string>
 #include <sstream>
 
-#include "Debug\Debug.h"
+#include "Game\Debug\Debug.h"
 
 template <typename T>
 std::wstring NumToStrw(T Number)
@@ -39,7 +39,7 @@ namespace JAMM
             const uint32 _size;
         public:
             _memBank(uint32 memInitialSize);
-            ~_memBank();
+            virtual ~_memBank();
     };
 
     // =================================================================================

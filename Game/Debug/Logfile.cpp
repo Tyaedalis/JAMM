@@ -1,4 +1,4 @@
-#include "Logfile.h"
+#include "Game\Debug\Logfile.h"
 
 _log::_log(wchar_t* filename)
 {

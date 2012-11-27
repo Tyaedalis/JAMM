@@ -5,12 +5,12 @@
 
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML\Graphics.hpp>
 
-#include "AtomicTypes.h"
-#include "Components\MemoryManager.h"
-#include "Components\config.h"
-#include "Debug\Debug.h"
+#include "Game\AtomicTypes.h"
+#include "Game\Components\MemoryManager.h"
+#include "Game\Components\ConfigFile.h"
+#include "Game\Debug\Debug.h"
 
 const std::wstring Config_Filename = L"DefaultConfig.x";
 

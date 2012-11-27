@@ -3,7 +3,7 @@
 	Code for cave generator.
 */
 
-#include "caveGen.h"
+#include "Game\Components\caveGen.h"
 
 // Point class
 Point::Point ()

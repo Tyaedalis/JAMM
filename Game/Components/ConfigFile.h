@@ -9,9 +9,14 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cctype>
+#include <locale>
+#include <algorithm> 
+#include <functional> 
 #include <map>
 
-#include "Debug\Debug.h"
+#include "Game\GlobalConstants.h"
+#include "Game\Debug\Debug.h"
 
 template <class T>
 T StringToValue(std::wstring &str)

@@ -1,4 +1,4 @@
-#include "GlobalConstants.h"
+#include "Game\GlobalConstants.h"
 
 const std::wstring JAMM::Config_Filename(L"config.ini");
 

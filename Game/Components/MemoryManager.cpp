@@ -3,7 +3,7 @@
 	Implementation file for the memory manager component. Contains class MemoryManager.
 */
 
-#include "MemoryManager.h"
+#include "Game\Components\MemoryManager.h"
 
 using namespace JAMM;
 
@@ -15,7 +15,7 @@ _memBank::_memBank(uint32 memInitialSize)
       _size(memInitialSize) // Initialize memory bank size constant
 {
     std::string sNumBytes = NumToStr<uint32>(memInitialSize);
-    std::string error = std::string("Failed to allocate ") + sNumBytes + " bytes of memory for memory bank.";
+    std::string error = std::string("*Failed to allocate ") + sNumBytes + " bytes of memory for memory bank.";
 
     if (_baseAddr == NULL)
         ExitWithError(error.c_str());

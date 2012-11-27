@@ -3,7 +3,7 @@
 	Contains main game class, JAMM::Game.
 */
 
-#include "Game.h"
+#include "Game\Game.h"
 
 using namespace JAMM;
 

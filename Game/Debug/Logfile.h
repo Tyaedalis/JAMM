@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-#include "AtomicTypes.h"
+#include "Game\AtomicTypes.h"
 
 class _log
 {

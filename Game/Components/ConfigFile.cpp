@@ -3,15 +3,7 @@
 	Implementaion file for config file handler. Contains class ConfigFile.
 */
 
-#include <iostream>
-#include <string>
-#include <algorithm> 
-#include <functional> 
-#include <cctype>
-#include <locale>
-
-#include "config.h"
-#include "GlobalConstants.h"
+#include "Game\Components\ConfigFile.h"
 
 using namespace JAMM;
 
