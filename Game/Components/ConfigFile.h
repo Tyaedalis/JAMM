@@ -44,18 +44,22 @@ namespace JAMM
 	class ConfigFile
 	{
 	    private:
-		    std::map<std::wstring, std::wstring> _configData; // map of string pairs
-		    std::wstring _configFileName;
+		    mutable std::map<std::wstring, std::wstring> _configData; // map of string pairs
+		    mutable std::wstring _configFileName;
 
             bool _createDefaultConfig();
 		    void _parseLine(const std::wstring&);
+
+            // Prevent compiler from generating default copy constructor\copy assignment operator code
+            ConfigFile(const ConfigFile&);
+            ConfigFile& operator=(const ConfigFile&);
         public:
 		    ConfigFile(const std::wstring&);
 
 		    void ReloadFile();
         
             template <class T>
-            T GetValue(const std::wstring &key, const T &defValue = NULL)
+            T GetValue(const std::wstring &key, const T &defValue = NULL) const
             {
                 if (_configData[key] != L"")
                     return StringToValue<T>(_configData[key]);
@@ -71,5 +75,5 @@ namespace JAMM
     Function declared in namespace scope that returns a global static instance of the default ConfigFile
     ==========================
     */
-    ConfigFile& Configuration();
+    const ConfigFile& gConfiguration();
 }

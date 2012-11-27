@@ -153,18 +153,17 @@ MemoryManager::MemoryManager() { }
 Default constructor for the MemoryManager class
 ==========================
 */
-MemoryManager::MemoryManager() { }
+MemoryManager::MemoryManager() 
+{ Log << L"Initializing memory manager ... "; }
 
 /*
 ==========================
-int32 MemoryManager::Initialize()
-Initializes MemoryManager members
+MemoryManager::MemoryManager() { }
+Destructor for the MemoryManager class
 ==========================
 */
-int32 MemoryManager::Initialize()
-{
-    return 1;
-}
+MemoryManager::~MemoryManager()
+{ }
 
 /*
 ==========================
@@ -172,7 +171,18 @@ int32 MemoryManager::Shutdown()
 Releases all memory allocaters tracked by MemoryManager
 ==========================
 */
-int32 MemoryManager::Shutdown()
+void MemoryManager::Shutdown() const
 {
-    return 1;
+}
+
+/*
+==========================
+MemoryManager& JAMM::gMemoryManager()
+Function implemented in namespace scope that returns a global static instance of the default MemoryManager
+==========================
+*/
+const MemoryManager& JAMM::gMemoryManager()
+{
+    static const MemoryManager MemoryManager;
+    return MemoryManager;
 }

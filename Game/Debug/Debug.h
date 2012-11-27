@@ -9,6 +9,8 @@ Contains various features to help with debugging the game
 
 #include "Game\Debug\Logfile.h"
 
+using namespace JAMM;
+
 inline void _reportAssertionFailure(const char* expr, const char* comment, const char* file, int32 line)
 {
     Log << "\n=======================================\n"

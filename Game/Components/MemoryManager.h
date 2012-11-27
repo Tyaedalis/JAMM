@@ -54,6 +54,10 @@ namespace JAMM
     */
     class MemoryAllocator
     {
+        private:
+            // Prevent compiler from generating default copy constructor\copy assignment operator code
+            MemoryAllocator(const MemoryAllocator&);
+            MemoryAllocator& operator=(const MemoryAllocator&);
         protected:
             constPtr32 _baseAddr;
             const uint32 _size;
@@ -70,6 +74,10 @@ namespace JAMM
     */
     class MemoryPool : public MemoryAllocator
     {
+        private:
+            // Prevent compiler from generating default copy constructor\copy assignment operator code
+            MemoryPool(const MemoryPool&);
+            MemoryPool& operator=(const MemoryPool&);
         protected:
             ptr32 _freeObjLinkedListRoot;
             const uint32 _objSize;
@@ -119,12 +127,22 @@ namespace JAMM
     */
     class MemoryManager
     {
-        public:
-            MemoryManager(); // Default constructor
-
-            int32 Initialize();
-            int32 Shutdown();
         private:
+            // Prevent compiler from generating default copy constructor\copy assignment operator code
+            MemoryManager(const MemoryManager&);
+            MemoryManager& operator=(const MemoryManager&);
+        public:
+            MemoryManager();
+            ~MemoryManager();
 
+            void Shutdown() const;
     };
+
+    /*
+    ==========================
+    MemoryManager& gMemoryManager();
+    Function declared in namespace scope that returns a global static instance of the default MemoryManager
+    ==========================
+    */
+    const MemoryManager& gMemoryManager();
 }

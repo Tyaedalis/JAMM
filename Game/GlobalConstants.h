@@ -8,6 +8,6 @@
 
 namespace JAMM
 {
-    extern const std::wstring Config_Filename;
-    extern const std::wstring Config_Default;
+    extern const std::wstring gConfig_Filename;
+    extern const std::wstring gConfig_Default;
 }

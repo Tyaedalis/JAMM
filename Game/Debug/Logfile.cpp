@@ -1,19 +1,21 @@
 /*
 ==========================
 Logfile.cpp
-Implementation file for the _log class
+Implementation file for the LogFile class
 ==========================
 */
 
 #include "Game\Debug\Logfile.h"
 
+using namespace JAMM;
+
 /*
 ==========================
-_log::_log(wchar_t* filename)
-Constructor for _log class, takes 'filename' arg for the log file path
+LogFile::LogFile(wchar_t* filename)
+Constructor for LogFile class, takes 'filename' arg for the log file path
 ==========================
 */
-_log::_log(wchar_t* filename)
+LogFile::LogFile(wchar_t* filename)
 {
     std::wcout << L"Creating log file " << filename << L"...\n\n";
 
@@ -24,19 +26,19 @@ _log::_log(wchar_t* filename)
 
 /*
 ==========================
-_log::~_log()
-Donstructor for _log class, closes the log filestream
+LogFile::~LogFile()
+Donstructor for LogFile class, closes the log filestream
 ==========================
 */
-_log::~_log()
+LogFile::~LogFile()
 {
      fileStream.close();
 }
 
 /*
 ==========================
-_log Log(L"log.txt");
-Global variable of the _log class, allows output of messages to the log file and console simultaneously
+LogFile JAMM::Log(L"log.txt");
+Global variable of the LogFile class, allows output of messages to the log file and console simultaneously
 ==========================
 */
-_log Log(L"log.txt");
+LogFile JAMM::Log(L"log.txt");

@@ -115,7 +115,7 @@ bool ConfigFile::_createDefaultConfig()
     if (ofStr.fail())
         return false;
 
-    ofStr << Config_Default;
+    ofStr << gConfig_Default;
     ofStr.flush();
     ofStr.close();
 
@@ -195,8 +195,8 @@ ConfigFile& JAMM::Configuration()
 Function implemented in namespace scope that returns a global static instance of the default ConfigFile
 ==========================
 */
-ConfigFile& JAMM::Configuration()
+const ConfigFile& JAMM::gConfiguration()
 {
-    static ConfigFile config(Config_Filename);
+    static const ConfigFile config(gConfig_Filename);
     return config;
 }

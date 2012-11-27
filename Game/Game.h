@@ -24,10 +24,18 @@ namespace JAMM
     */
     class Game
     {
+        private:
+            uint32 _screenWidth;
+            uint32 _screenHeight;
+
+            int32 mainLoop();
+
+            // Prevent compiler from generating default copy constructor\copy assignment operator code
+            Game(const Game&);
+            Game& operator=(const Game&);
         public:
             // Pointer to the game render window
             sf::RenderWindow* GameWindow;
-            MemoryManager* MemManager;
 
             // Default constructor
             Game();
@@ -36,10 +44,13 @@ namespace JAMM
             void ShutdownComponents();
 
             int32 Start();
-        private:
-            uint32 _screenWidth;
-            uint32 _screenHeight;
-
-            int32 mainLoop();
     };
+
+    /*
+    ==========================
+    Game& gGame();
+    Function declared in namespace scope that returns a global static instance of the default Game class
+    ==========================
+    */
+    Game& gGame();
 }

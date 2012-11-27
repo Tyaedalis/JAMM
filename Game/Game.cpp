@@ -16,7 +16,7 @@ Default constructor for the Game class, initializes member variables
 Game::Game()
     : _screenWidth(800),
       _screenHeight(600)
-{ }
+{ Log << L"Initializing main Game class ...\n"; }
 
 /*
 ==========================
@@ -28,8 +28,8 @@ void Game::InitializeComponents()
 {
     Log << L"\n============= Begin Startup =============\n";
 
-    _screenWidth = Configuration().GetValue<uint32>(L"gScreenWidth", _screenWidth);
-    _screenHeight = Configuration().GetValue<uint32>(L"gScreenHeight", _screenHeight);
+    _screenWidth = gConfiguration().GetValue<uint32>(L"gScreenWidth", _screenWidth);
+    _screenHeight = gConfiguration().GetValue<uint32>(L"gScreenHeight", _screenHeight);
 
     Log << L"Initializing game window ... ";
     GameWindow = new sf::RenderWindow(sf::VideoMode(_screenWidth, _screenHeight), "Project JAMM");
@@ -38,12 +38,6 @@ void Game::InitializeComponents()
     else
         ExitWithError("Failed to create render window.");
 
-    Log << L"Initializing memory manager ... ";
-    MemManager = new MemoryManager();
-    if (MemManager->Initialize())
-        Log << L"Done.\n";
-    else
-        ExitWithError("Failed to initialize memory manager.");
 
     Log << L"\n============= End Startup =============\n\n";
 }
@@ -59,8 +53,7 @@ void Game::ShutdownComponents()
     GameWindow->close();
     delete GameWindow;
 
-    MemManager->Shutdown();
-    delete MemManager;
+    gMemoryManager().Shutdown();
 }
 
 /*
@@ -102,4 +95,16 @@ int32 Game::mainLoop()
     }
 
     return 1;
+}
+
+/*
+==========================
+Game& JAMM::gGame()
+Function implemented in namespace scope that returns a global static instance of the default Game class
+==========================
+*/
+Game& JAMM::gGame()
+{
+    static Game Game;
+    return Game;
 }

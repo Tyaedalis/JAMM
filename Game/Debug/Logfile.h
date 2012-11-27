@@ -1,7 +1,7 @@
 /*
 ==========================
 Logfile.cpp
-Header file for the _log class
+Header file for the LogFile class
 ==========================
 */
 
@@ -13,38 +13,45 @@ Header file for the _log class
 
 #include "Game\AtomicTypes.h"
 
-class _log
+namespace JAMM
 {
-    public:
-        std::wofstream fileStream;
+    class LogFile
+    {
+        private:
+            mutable std::wofstream fileStream;
 
-        _log(wchar_t* filename);
-        ~_log();
+            // Prevent compiler from generating default copy constructor\copy assignment operator code
+            LogFile(const LogFile&);
+            LogFile& operator=(const LogFile&);
+        public:
+            LogFile(wchar_t* filename);
+            ~LogFile();
 
-        template<class t>
-        friend _log &operator<<(_log &left, const t& right)
-        {
-            std::wcout << right;
-            left.fileStream << right;
-            left.fileStream.flush();
-            return left;  
-        }
+            template<class t>
+            friend LogFile &operator<<(LogFile &left, const t& right)
+            {
+                std::wcout << right;
+                left.fileStream << right;
+                left.fileStream.flush();
+                return left;  
+            }
 
-        template<class t>
-        friend _log &operator<<(_log &left, const t* right)
-        {
-            std::wcout << right;
-            left.fileStream << right;
-            left.fileStream.flush();
-            return left;  
-        }
-};
+            template<class t>
+            friend LogFile &operator<<(LogFile &left, const t* right)
+            {
+                std::wcout << right;
+                left.fileStream << right;
+                left.fileStream.flush();
+                return left;  
+            }
+    };
 
-/*
-==========================
-extern _log Log;
-Global variable declaration of the _log class, allows output of messages to the log file and console simultaneously.
-Initialization is in Logfile.cpp
-==========================
-*/
-extern _log Log;
+    /*
+    ==========================
+    extern LogFile Log;
+    Global variable declaration of the _log class, allows output of messages to the log file and console simultaneously.
+    Initialization is in Logfile.cpp
+    ==========================
+    */
+    extern LogFile Log;
+}
